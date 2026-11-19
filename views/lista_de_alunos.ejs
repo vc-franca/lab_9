@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="./styles/global.css">
+</head>
+
+<body class="flex flex-col align-center bg-bisque w-100 gap-40">
+    <section class="flex flex-col justify-center align-center gap-10 w-200">
+        <h1>Academia</h1>
+
+        <img src="./icone.svg" alt="icone">
+
+        <form action="/cadastrar_aluno" method="post">
+            <div class="flex flex-col align-center">
+                <p>Nome: <input type="text" name="nome"></p>
+                <p>Exercício: <input type="text" name="exercicio"></p>
+                <p>Carga: <input type="text" name="carga"></p>
+                
+                <input type="submit">
+            </div>
+        </form>
+    </section>
+
+    <section class="flex flex-col justify-center align-center gap-10 w-100">
+        <% for (let i = 0; i < alunos.length; i++) { %>
+            <div class="w-20 flex flex-col padding-10 border bg-white">
+                <h2>Aluno: <%= alunos[i].dbNome %></h2>
+                <p>Exercício: <%= alunos[i].dbExercicio %></p>
+                <p>Carga: <%= alunos[i].dbCarga %></p>
+            </div>
+        <% } %>
+    </section>
+</body>
+
+</html>

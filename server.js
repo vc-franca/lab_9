@@ -12,14 +12,14 @@ const MongoClient = mongodb.MongoClient;
 const url = 'mongodb://localhost:27017';
 const client = new MongoClient(url);
 
-const db = client.db('blog');
+const db = client.db('p2_academia');
 
-let posts = db.collection('posts');
+let alunos = db.collection('alunos');
 
 /* -------------------------------------------------------------------------- */
 /*                                   CONFIG                                   */
 /* -------------------------------------------------------------------------- */
-app.use(express.static('./public'));
+app.use(express.static('./views'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
@@ -29,46 +29,55 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.set('view engine', 'ejs');
 app.set('views', './views');
 
-app.post('/cadastrar_post', async (req, res) => {
-    console.log('ROTA ACESSADA!');
-    console.log(req.body);
+app.get('/', async (req, res) => {
+    try {
+        const result = await alunos.find().toArray();
 
-    const { titulo, resumo, conteudo } = req.body;
+        res.render('lista_de_alunos.ejs', {
+            alunos: result
+        });
+    } catch (err) {
+        res.render('lista_de_alunos.ejs', {
+            alunos: `erro ao exibir alunos: ${JSON.stringify(err)}`
+        });
+    }
+});
+
+app.post('/cadastrar_aluno', async (req, res) => {
+    const { nome, exercicio, carga } = req.body;
+
+    if (isNaN(carga)) {
+        return res.render('res_erro.ejs', {
+            erro: 'a carga informada não é um valor válido'
+        });
+    }
 
     const data = {
-        dbTitulo: titulo,
-        dbResumo: resumo,
-        dbConteudo: conteudo
+        dbNome: nome,
+        dbExercicio: exercicio,
+        dbCarga: carga
     };
 
     try {
-        const result = await posts.insertOne(data);
+        const result = await alunos.insertOne(data);
 
         console.log(`resultado: ${JSON.stringify(result)}`);
 
         res.render('res_usuario.ejs', {
-            resposta: 'post criado com sucesso'
+            resposta: 'aluno criado com sucesso',
+            aluno: nome,
+            carga: carga
         });
     } catch (err) {
         res.render('res_usuario.ejs', {
-            resposta: `erro ao cadastrar post: ${JSON.stringify(err)}`
+            resposta: `erro ao cadastrar aluno: ${err}`
         });
     }
 });
 
-app.get('/blog.ejs', async (req, res) => {
-    try {
-        const result = await posts.find().toArray();
+// app.get('/lista_de_alunos.ejs', async (req, res) => {
 
-        res.render('blog.ejs', {
-            posts: result
-        });
-    } catch (err) {
-        res.render('blog.ejs', {
-            resposta: `erro ao exibir posts: ${JSON.stringify(err)}`
-        });
-    }
-});
+// });
 
 app.listen(port, () => {
     console.log(`servidor rodando em: http://localhost:${port}`);

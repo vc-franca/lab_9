@@ -8,6 +8,10 @@ body {
     margin: 0;
 }
 
+.border { border: #000000 1px solid; }
+
+.t-large { font-size: xx-large; }
+
 /* -------------------------------- proorções ------------------------------- */
 .h-0 { height: 0%; }
 .h-5 { height: 5%; }
@@ -37,16 +41,8 @@ body {
 .align-center { align-items: center; }
 
 /* ---------------------------------- cores --------------------------------- */
-.bg-green { background-color: #00ff00; }
-.bg-red { background-color: #ff0000; }
-.bg-blue { background-color: #0000ff; }
-.bg-yellow { background-color: #ffff00; }
-.bg-purple { background-color: #800080; }
-.bg-orange { background-color: #ffa500; }
-.bg-pink { background-color: #ffc0cb; }
-.bg-gray { background-color: #808080; }
-.bg-white { background-color: #ffffff; }
-.bg-black { background-color: #000000; }
+.bg-bisque { background-color: bisque; }
+.bg-white { background-color: white; }
 
 /* --------------------------------- padding -------------------------------- */
 .padding-0 { padding: 0px; }
